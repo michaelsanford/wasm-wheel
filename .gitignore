@@ -2,3 +2,5 @@ node_modules
 build/wasm/*
 /build/wheel-parts.json
 /src/langs/java/target
+/src/langs/rust/target
+/src/langs/rust/Cargo.lock

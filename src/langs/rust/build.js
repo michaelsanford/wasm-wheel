@@ -1,15 +1,18 @@
+const fs = require('fs');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
 exports.task = (done) => {
     const buildDir = `${__dirname}/../../../build/wasm`;
 
-    exec(`rustc +nightly --target wasm32-unknown-unknown --crate-type=cdylib -o ${buildDir}/wheel-part-rust.wasm ${__dirname}/wheel-part.rs`)
+    exec('cargo  +nightly build --target wasm32-unknown-unknown --release', { cwd: __dirname })
         .then(({ stdout }) => {
             console.log(stdout);
+
+            fs.copyFileSync(`${__dirname}/target/wasm32-unknown-unknown/release/wasm_wheel.wasm`, `${buildDir}/wheel-part-rust.wasm`);
             done();
-        }, ({ stdout, cmd }) => {
-            console.log(stdout);
+        }, ({ stderr, cmd }) => {
+            console.log(stderr);
             throw Error(`Error when running: ${cmd}`);
         });
 };
