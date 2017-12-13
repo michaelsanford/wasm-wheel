@@ -44,7 +44,6 @@ You have to install the Rust toolchain by following these [instructions](https:/
 
 ```
 $> rustup update nightly
-$> rustup default nightly
 $> rustup target add wasm32-unknown-unknown
 ```
 
